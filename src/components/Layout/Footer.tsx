@@ -51,7 +51,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms, onOpenPrivacy }) =>
             <ul className="space-y-4 text-slate-500 text-sm">
               <li>jairjuniorccs@gmail.com</li>
               <li>Goiás - Brasil</li>
-              <li>+55 11 99384-6943</li>
+              <li>+55 62 99384-6943</li>
             </ul>
           </div>
         </div>
