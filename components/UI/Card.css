@@ -1,0 +1,16 @@
+
+.card-main {
+  @apply relative overflow-hidden bg-slate-900/50 border border-slate-800/50 rounded-2xl p-8 transition-all duration-300;
+}
+
+.card-hoverable {
+  @apply hover:border-blue-500/50 hover:bg-slate-900/80 hover:-translate-y-1;
+}
+
+.card-gradient-decor {
+  @apply absolute top-0 right-0 -mr-16 -mt-16 w-32 h-32 bg-blue-500/10 blur-3xl rounded-full pointer-events-none;
+}
+
+.card-content {
+  @apply relative z-10;
+}
