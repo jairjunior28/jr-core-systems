@@ -1,0 +1,32 @@
+
+.hero-section {
+  @apply relative min-h-screen flex items-center justify-center pt-20 overflow-hidden;
+}
+
+.hero-decor-1 {
+  @apply absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/10 blur-[120px] rounded-full animate-pulse;
+}
+
+.hero-decor-2 {
+  @apply absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/10 blur-[120px] rounded-full animate-pulse;
+}
+
+.hero-badge {
+  @apply inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium mb-8;
+}
+
+.hero-title {
+  @apply text-5xl md:text-8xl font-black text-white leading-tight mb-8 tracking-tight;
+}
+
+.hero-gradient-text {
+  @apply text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500;
+}
+
+.hero-description {
+  @apply text-slate-400 text-lg md:text-xl max-w-3xl mx-auto mb-10 leading-relaxed;
+}
+
+.hero-brand-bar {
+  @apply mt-20 pt-10 border-t border-slate-900 flex flex-wrap justify-center gap-12 opacity-40 grayscale hover:grayscale-0 transition-all duration-500;
+}

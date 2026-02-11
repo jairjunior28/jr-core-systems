@@ -1,0 +1,28 @@
+
+.section-wrapper {
+  @apply py-20 px-6;
+}
+
+.section-dark {
+  @apply bg-slate-950;
+}
+
+.section-light {
+  @apply bg-slate-900/30;
+}
+
+.section-container {
+  @apply max-w-7xl mx-auto;
+}
+
+.section-header {
+  @apply text-center mb-16 space-y-4;
+}
+
+.section-title {
+  @apply text-3xl md:text-5xl font-extrabold text-white tracking-tight;
+}
+
+.section-subtitle {
+  @apply text-slate-400 text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed;
+}
