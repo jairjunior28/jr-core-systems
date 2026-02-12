@@ -18,7 +18,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms, onOpenPrivacy }) =>
                 <span className="font-bold text-white text-lg">JR</span>
               </div>
               <span className="text-xl font-bold text-white tracking-tighter uppercase">
-                CORE <span className="text-blue-500">SYSTEMS</span>
+                Jr Core <span className="text-blue-500">Systems</span>
               </span>
             </div>
             <p className="text-slate-500 max-w-sm leading-relaxed">
@@ -49,15 +49,22 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms, onOpenPrivacy }) =>
           <div>
             <h4 className="text-white font-bold mb-6 uppercase tracking-widest text-xs">Contato</h4>
             <ul className="space-y-4 text-slate-500 text-sm">
-              <li className="break-all">jairjuniorccs@gmail.com</li>
+              <li className="font-medium text-slate-400">CNPJ: 65.089.647/0001-87</li>
+              <li className="break-all">jrcoresystems@gmail.com</li>
               <li>Goiás - Brasil</li>
               <li>+55 62 99384-6943</li>
             </ul>
           </div>
         </div>
 
-        <div className="pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-600 text-xs uppercase tracking-widest">
-          <p>© {new Date().getFullYear()} JR Core Systems. Todos os direitos reservados.</p>
+        <div className="pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-600 text-[10px] uppercase tracking-widest">
+          <div className="flex flex-col md:flex-row gap-2 md:gap-4 items-center">
+            <p>© {new Date().getFullYear()} Jr Core Systems</p>
+            <span className="hidden md:inline text-slate-800">|</span>
+            <p>CNPJ: 65.089.647/0001-87</p>
+            <span className="hidden md:inline text-slate-800">|</span>
+            <p>Todos os direitos reservados.</p>
+          </div>
           <div className="flex gap-8">
             <button onClick={onOpenPrivacy} className="hover:text-slate-400 transition-colors">Privacidade</button>
             <button onClick={onOpenTerms} className="hover:text-slate-400 transition-colors">Termos de Uso</button>

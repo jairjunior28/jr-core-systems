@@ -5,8 +5,8 @@ export const PrivacyPolicy: React.FC = () => {
   return (
     <div className="space-y-8 text-slate-400 leading-relaxed text-sm">
       <div className="space-y-2">
-        <p className="font-bold text-white uppercase text-xs tracking-[0.2em] text-blue-500">Privacidade Core • Edição 2026</p>
-        <p>A <strong>JR Core Systems</strong> valoriza a integridade dos seus dados. Esta política descreve como tratamos informações no ecossistema de nossas plataformas e serviços.</p>
+        <p className="font-bold text-white uppercase text-xs tracking-[0.2em] text-blue-500">Privacidade Core • Jr Core Systems</p>
+        <p>A <strong>Jr Core Systems</strong> (CNPJ: 65.089.647/0001-87) valoriza a integridade dos seus dados. Esta política descreve como tratamos informações no ecossistema de nossas plataformas e serviços.</p>
       </div>
 
       <section className="space-y-4">
@@ -31,8 +31,9 @@ export const PrivacyPolicy: React.FC = () => {
 
       <section className="space-y-4 text-center py-6 bg-slate-800/50 rounded-2xl">
         <p className="text-xs uppercase font-black tracking-widest text-slate-500 mb-2">Canal de Privacidade</p>
-        <p className="text-white font-bold">jairjuniorccs@gmail.com</p>
-        <p className="text-[10px] text-slate-500 mt-2">Goiás - Brasil</p>
+        <p className="text-white font-bold">jrcoresystems@gmail.com</p>
+        <p className="text-[10px] text-slate-500 mt-1">Jr Core Systems</p>
+        <p className="text-[10px] text-slate-500">65.089.647/0001-87</p>
       </section>
     </div>
   );
