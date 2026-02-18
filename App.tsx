@@ -4,27 +4,30 @@ import { Home } from './pages/Home';
 import { PrivacyPage } from './pages/PrivacyPage';
 
 /**
- * Custom router implementation to avoid dependency issues with react-router-dom.
- * This handles simple path-based navigation for our two pages.
+ * Roteador customizado baseado em Hash (#) para evitar erros 404 no Vercel.
+ * Links funcionarão como #/privacy.
  */
 const App: React.FC = () => {
-  const [currentPath, setCurrentPath] = useState(window.location.pathname);
+  const [hash, setHash] = useState(window.location.hash);
 
   useEffect(() => {
-    // Listen for back/forward browser navigation
-    const handlePopState = () => {
-      setCurrentPath(window.location.pathname);
+    const handleHashChange = () => {
+      setHash(window.location.hash);
+      // Rola para o topo quando a rota muda
+      if (window.location.hash.startsWith('#/')) {
+        window.scrollTo(0, 0);
+      }
     };
 
-    window.addEventListener('popstate', handlePopState);
+    window.addEventListener('hashchange', handleHashChange);
     return () => {
-      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener('hashchange', handleHashChange);
     };
   }, []);
 
-  // Simple route matcher: Anything that isn't /privacy defaults to Home (including catch-all behavior)
+  // Renderiza a página baseada no hash da URL
   const renderRoute = () => {
-    if (currentPath === '/privacy') {
+    if (hash === '#/privacy') {
       return <PrivacyPage />;
     }
     return <Home />;

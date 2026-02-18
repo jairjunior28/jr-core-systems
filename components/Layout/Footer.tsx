@@ -13,8 +13,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms, onOpenPrivacy }) =>
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div className="col-span-1 md:col-span-2 space-y-6">
-            {/* Replaced Link with standard anchor tag */}
-            <a href="/" className="flex items-center gap-2 group">
+            <a href="#/" className="flex items-center gap-2 group">
               <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center shadow-lg group-hover:bg-blue-500 transition-colors">
                 <span className="font-bold text-white text-lg">JR</span>
               </div>
@@ -40,7 +39,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms, onOpenPrivacy }) =>
             <ul className="space-y-4">
               {NAV_ITEMS.map(item => (
                 <li key={item.label}>
-                  <a href={item.href.startsWith('#') ? `/${item.href}` : item.href} className="text-slate-500 hover:text-blue-400 transition-colors text-sm">
+                  <a href={item.href.startsWith('#') ? `#/${item.href}` : item.href} className="text-slate-500 hover:text-blue-400 transition-colors text-sm">
                     {item.label}
                   </a>
                 </li>
@@ -74,8 +73,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms, onOpenPrivacy }) =>
             <p>Brasília - GO - Brasil</p>
           </div>
           <div className="flex gap-8">
-            {/* Replaced Link with standard anchor tag */}
-            <a href="/privacy" className="hover:text-blue-500 transition-colors">Privacidade</a>
+            <a href="#/privacy" className="hover:text-blue-500 transition-colors">Privacidade</a>
             <button onClick={onOpenTerms} className="hover:text-blue-500 transition-colors">Termos</button>
           </div>
         </div>
