@@ -2,10 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import { Home } from './pages/Home';
 import { PrivacyPage } from './pages/PrivacyPage';
+import { DeleteAccountPage } from './pages/DeleteAccountPage';
 
 /**
  * Roteador customizado baseado em Hash (#) para evitar erros 404 no Vercel.
- * Links funcionarão como #/privacy.
  */
 const App: React.FC = () => {
   const [hash, setHash] = useState(window.location.hash);
@@ -14,9 +14,7 @@ const App: React.FC = () => {
     const handleHashChange = () => {
       setHash(window.location.hash);
       // Rola para o topo quando a rota muda
-      if (window.location.hash.startsWith('#/')) {
-        window.scrollTo(0, 0);
-      }
+      window.scrollTo(0, 0);
     };
 
     window.addEventListener('hashchange', handleHashChange);
@@ -27,10 +25,14 @@ const App: React.FC = () => {
 
   // Renderiza a página baseada no hash da URL
   const renderRoute = () => {
-    if (hash === '#/privacy') {
-      return <PrivacyPage />;
+    switch (hash) {
+      case '#/privacy':
+        return <PrivacyPage />;
+      case '#/delete-account':
+        return <DeleteAccountPage />;
+      default:
+        return <Home />;
     }
-    return <Home />;
   };
 
   return (

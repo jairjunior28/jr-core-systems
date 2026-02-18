@@ -74,6 +74,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms, onOpenPrivacy }) =>
           </div>
           <div className="flex gap-8">
             <a href="#/privacy" className="hover:text-blue-500 transition-colors">Privacidade</a>
+            <a href="#/delete-account" className="hover:text-red-500 transition-colors">Excluir Conta</a>
             <button onClick={onOpenTerms} className="hover:text-blue-500 transition-colors">Termos</button>
           </div>
         </div>
