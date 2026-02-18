@@ -18,27 +18,34 @@ export const Navbar: React.FC = () => {
       isScrolled ? 'py-4 glass' : 'py-8 bg-transparent'
     }`}>
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center shadow-[0_0_30px_rgba(37,99,235,0.4)] rotate-3">
-            <span className="font-black text-white text-2xl -rotate-3">JR</span>
+        {/* Replaced Link with standard anchor tag */}
+        <a href="/" className="flex items-center gap-3 group">
+          <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center shadow-[0_0_30px_rgba(37,99,235,0.4)] rotate-3 group-hover:rotate-0 transition-transform">
+            <span className="font-black text-white text-2xl -rotate-3 group-hover:rotate-0 transition-transform">JR</span>
           </div>
           <div className="flex flex-col leading-none">
             <span className="text-xl font-black text-white tracking-tighter uppercase">Core</span>
             <span className="text-[10px] font-bold text-blue-500 tracking-[0.4em] uppercase">Systems</span>
           </div>
-        </div>
+        </a>
 
         <div className="hidden md:flex items-center gap-12">
           {NAV_ITEMS.map((item) => (
             <a 
               key={item.label} 
-              href={item.href} 
+              href={item.href.startsWith('#') ? `/${item.href}` : item.href} 
               className="text-slate-400 hover:text-white font-bold transition-all text-xs uppercase tracking-[0.2em]"
             >
               {item.label}
             </a>
           ))}
-          <Button size="sm" onClick={() => document.getElementById('contact')?.scrollIntoView()}>
+          <Button size="sm" onClick={() => {
+            if (window.location.pathname !== '/') {
+              window.location.href = '/#contact';
+            } else {
+              document.getElementById('contact')?.scrollIntoView();
+            }
+          }}>
             Fale Conosco
           </Button>
         </div>
@@ -55,18 +62,25 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 glass border-t border-white/5 p-8 flex flex-col gap-6">
+        <div className="md:hidden absolute top-full left-0 right-0 glass border-t border-white/5 p-8 flex flex-col gap-6 animate-in slide-in-from-top duration-300">
           {NAV_ITEMS.map((item) => (
             <a 
               key={item.label} 
-              href={item.href} 
+              href={item.href.startsWith('#') ? `/${item.href}` : item.href}
               className="text-xl font-bold text-white uppercase tracking-widest"
               onClick={() => setIsMenuOpen(false)}
             >
               {item.label}
             </a>
           ))}
-          <Button className="w-full" onClick={() => { setIsMenuOpen(false); document.getElementById('contact')?.scrollIntoView(); }}>
+          <Button className="w-full" onClick={() => { 
+            setIsMenuOpen(false); 
+            if (window.location.pathname !== '/') {
+              window.location.href = '/#contact';
+            } else {
+              document.getElementById('contact')?.scrollIntoView();
+            }
+          }}>
             Fale Conosco
           </Button>
         </div>
