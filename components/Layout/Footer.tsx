@@ -70,7 +70,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms, onOpenPrivacy }) =>
           <div className="flex flex-col md:flex-row gap-2 md:gap-4 items-center">
             <p>© {new Date().getFullYear()} Jr Core Systems</p>
             <span className="hidden md:inline text-slate-800">|</span>
-            <p>Brasília - GO - Brasil</p>
+            <p>Anápolis - GO - Brasil</p>
           </div>
           <div className="flex gap-8">
             <a href="#/privacy" className="hover:text-blue-500 transition-colors">Privacidade</a>
