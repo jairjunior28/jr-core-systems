@@ -1,7 +1,7 @@
 
-// Fix: Use the official compat paths for Firebase v9+ to support v8 style syntax
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
+import { initializeApp, getApps } from "firebase/app";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAIfbogrZ4Rs0t2mBNVfg9GNpfDk5ggfa0",
@@ -12,11 +12,11 @@ const firebaseConfig = {
   appId: "1:180774067633:android:f5aeb037e93a2f7a2ab190"
 };
 
-// Initialize Firebase using the compat API to ensure compatibility
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
+// Initialize Firebase
+const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 
-export const auth = firebase.auth();
-export const googleProvider = new firebase.auth.GoogleAuthProvider();
-export default firebase;
+export const auth = getAuth(app);
+export const db = getFirestore(app);
+export const googleProvider = new GoogleAuthProvider();
+
+export default app;

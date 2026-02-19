@@ -13,13 +13,23 @@ export const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleContactClick = () => {
+    setIsMenuOpen(false);
+    const currentHash = window.location.hash;
+    // If we are not on the main home route, navigate to the contact hash on home
+    if (currentHash && currentHash !== '#' && currentHash !== '#/' && !currentHash.startsWith('#home')) {
+      window.location.hash = '#contact';
+    } else {
+      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
       isScrolled ? 'py-4 glass' : 'py-8 bg-transparent'
     }`}>
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        {/* Replaced Link with standard anchor tag */}
-        <a href="/" className="flex items-center gap-3 group">
+        <a href="#/" className="flex items-center gap-3 group">
           <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center shadow-[0_0_30px_rgba(37,99,235,0.4)] rotate-3 group-hover:rotate-0 transition-transform">
             <span className="font-black text-white text-2xl -rotate-3 group-hover:rotate-0 transition-transform">JR</span>
           </div>
@@ -33,19 +43,13 @@ export const Navbar: React.FC = () => {
           {NAV_ITEMS.map((item) => (
             <a 
               key={item.label} 
-              href={item.href.startsWith('#') ? `/${item.href}` : item.href} 
+              href={item.href} 
               className="text-slate-400 hover:text-white font-bold transition-all text-xs uppercase tracking-[0.2em]"
             >
               {item.label}
             </a>
           ))}
-          <Button size="sm" onClick={() => {
-            if (window.location.pathname !== '/') {
-              window.location.href = '/#contact';
-            } else {
-              document.getElementById('contact')?.scrollIntoView();
-            }
-          }}>
+          <Button size="sm" onClick={handleContactClick}>
             Fale Conosco
           </Button>
         </div>
@@ -66,21 +70,14 @@ export const Navbar: React.FC = () => {
           {NAV_ITEMS.map((item) => (
             <a 
               key={item.label} 
-              href={item.href.startsWith('#') ? `/${item.href}` : item.href}
+              href={item.href}
               className="text-xl font-bold text-white uppercase tracking-widest"
               onClick={() => setIsMenuOpen(false)}
             >
               {item.label}
             </a>
           ))}
-          <Button className="w-full" onClick={() => { 
-            setIsMenuOpen(false); 
-            if (window.location.pathname !== '/') {
-              window.location.href = '/#contact';
-            } else {
-              document.getElementById('contact')?.scrollIntoView();
-            }
-          }}>
+          <Button className="w-full" onClick={handleContactClick}>
             Fale Conosco
           </Button>
         </div>

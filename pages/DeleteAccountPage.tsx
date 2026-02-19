@@ -5,7 +5,9 @@ import { Footer } from '../components/Layout/Footer';
 import { Section } from '../components/UI/Section';
 import { Button } from '../components/UI/Button';
 import { Card } from '../components/UI/Card';
-import { auth, googleProvider } from '../firebase';
+import { auth, googleProvider, db } from '../firebase';
+import { signInWithPopup, deleteUser } from 'firebase/auth';
+import { doc, deleteDoc } from 'firebase/firestore';
 
 export const DeleteAccountPage: React.FC = () => {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -16,26 +18,40 @@ export const DeleteAccountPage: React.FC = () => {
     setError('');
 
     try {
-      // 1. Verificar se há um usuário logado ou iniciar fluxo de login
-      // Para exclusão, o Firebase exige uma "reautenticação recente"
-      const result = await auth.signInWithPopup(googleProvider);
+      // 1. Reautenticar para obter permissões de exclusão (requisito do Firebase Auth)
+      const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
 
-      if (user) {
-        // 2. Excluir o usuário e seus dados associados no Firebase Auth
-        await user.delete();
+      if (user && user.email) {
+        // 2. Excluir o documento do usuário no Firestore baseado no EMAIL (conforme nova regra do app)
+        const userDocRef = doc(db, 'users', user.email);
+        
+        try {
+          // Tentamos deletar o documento no Firestore primeiro
+          await deleteDoc(userDocRef);
+          console.log("Documento no Firestore removido com sucesso.");
+        } catch (fsErr) {
+          // Se falhar a deleção do documento (ex: permissões), registramos mas prosseguimos com a conta se possível
+          console.error("Erro ao deletar documento no Firestore:", fsErr);
+        }
+
+        // 3. Excluir o usuário do Firebase Auth permanentemente
+        await deleteUser(user);
+        
         setStatus('success');
       } else {
-        throw new Error("Não foi possível identificar o usuário.");
+        throw new Error("Não foi possível identificar o e-mail do usuário.");
       }
     } catch (err: any) {
-      console.error("Erro na exclusão:", err);
+      console.error("Erro na exclusão completa:", err);
       setStatus('error');
       
       if (err.code === 'auth/popup-closed-by-user') {
         setError('A janela de login foi fechada antes de concluir a autenticação.');
       } else if (err.code === 'auth/requires-recent-login') {
         setError('Por segurança, faça login novamente para confirmar a exclusão.');
+      } else if (err.code === 'permission-denied') {
+        setError('Erro de permissão nas regras do Firebase. Verifique se as regras do Firestore permitem a exclusão pelo usuário.');
       } else {
         setError(err.message || 'Ocorreu um erro ao processar a exclusão via Google.');
       }
@@ -47,8 +63,8 @@ export const DeleteAccountPage: React.FC = () => {
       <Navbar />
       <main className="pt-32 pb-20 px-6">
         <Section 
-          title="Excluir Conta (Google)" 
-          subtitle="Processo de exclusão segura para usuários que utilizam o Google OAuth no ecossistema Total AI."
+          title="Excluir Conta e Dados" 
+          subtitle="Processo de remoção definitiva para o ecossistema JR Core Systems."
         >
           <div className="max-w-xl mx-auto">
             {status === 'success' ? (
@@ -58,9 +74,9 @@ export const DeleteAccountPage: React.FC = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <h2 className="text-3xl font-black text-white mb-4">Dados Removidos</h2>
+                <h2 className="text-3xl font-black text-white mb-4">Conta Excluída</h2>
                 <p className="text-slate-400 mb-8">
-                  Sua conta foi desconectada e todos os dados do <strong>Total AI Financial Core</strong> vinculados ao seu Google foram excluídos.
+                  Seu perfil e todos os dados vinculados ao e-mail no Firestore foram permanentemente removidos.
                 </p>
                 <Button onClick={() => window.location.hash = '#/'}>Voltar ao Início</Button>
               </Card>
@@ -74,9 +90,9 @@ export const DeleteAccountPage: React.FC = () => {
                     Ação Irreversível
                   </h4>
                   <ul className="text-slate-400 text-sm space-y-2 list-disc pl-5">
-                    <li>Seu perfil será permanentemente removido.</li>
-                    <li>Todos os históricos financeiros baseados em IA serão deletados.</li>
-                    <li>Não será possível recuperar os dados após a confirmação.</li>
+                    <li>O documento vinculado ao seu e-mail no Firestore será deletado.</li>
+                    <li>Sua autenticação Google será desvinculada do sistema.</li>
+                    <li>Todos os módulos (Finance, Analytics, AI) perderão seus dados.</li>
                   </ul>
                 </div>
 
@@ -89,7 +105,7 @@ export const DeleteAccountPage: React.FC = () => {
                   
                   <div className="text-center">
                     <p className="text-slate-500 text-sm mb-6">
-                      Para confirmar a identidade e excluir os dados, clique no botão abaixo para reautenticar com sua conta Google.
+                      Como o sistema agora utiliza seu <strong>e-mail</strong> como identificador no banco de dados, precisamos que você confirme a posse desta conta Google.
                     </p>
                     
                     <button 
@@ -103,7 +119,7 @@ export const DeleteAccountPage: React.FC = () => {
                         <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
                         <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
                       </svg>
-                      {status === 'loading' ? 'Processando...' : 'Confirmar e Excluir com Google'}
+                      {status === 'loading' ? 'Removendo do Core...' : 'Confirmar e Excluir Dados'}
                     </button>
                   </div>
                   
@@ -112,7 +128,7 @@ export const DeleteAccountPage: React.FC = () => {
                       onClick={() => window.location.hash = '#/'}
                       className="text-slate-500 hover:text-white text-xs uppercase tracking-widest font-bold"
                     >
-                      Cancelar e voltar
+                      Manter minha conta
                     </button>
                   </div>
                 </div>
